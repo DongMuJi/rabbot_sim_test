@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<robot name="rabbot_pole" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:macro name="rabbot_stack_pole" params="parent number x_loc y_loc z_loc color">
+    <joint name="pole_joint_${number}" type="fixed">
+      <origin xyz="${x_loc} ${y_loc} ${z_loc}" rpy="0 0 0"/>
+      <parent link="${parent}"/>
+      <child link="pole_link_${number}"/>
+    </joint>
+    <link name="pole_link_${number}">
+      <inertial>
+        <origin xyz="3.1364E-19 4.29105644415052E-18 0.0675" rpy="0 0 0" />
+        <mass value="0.072321" />
+        <inertia
+          ixx="0.000108852795745136"
+          ixy="0"
+          ixz="0"
+          iyy="0.000108852795745136"
+          iyz="0"
+          izz="2.3430644318598E-06" />
+      </inertial>
+      <visual>
+        <origin xyz="0 0 0" rpy="1.5707963267949 0 0" />
+        <geometry>
+          <mesh filename="package://rabbot_description/include/meshes/arm_support_connector.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="${color}"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="1.5707963267949 0 0" />
+        <geometry>
+          <mesh filename="package://rabbot_description/include/meshes/arm_support_connector.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <gazebo reference="pole_link_${number}">
+      <material>Gazebo/Black</material>
+      <turnGravityOff>false</turnGravityOff>
+    </gazebo>
+
+  </xacro:macro>
+
+  <xacro:macro name="rabbot_pole" params="parent set_color">
+   <rabbot_stack_pole parent="${parent}" number="0" x_loc= "0.084" y_loc= "0.127" z_loc="0.006" color="${set_color}"/>
+   <rabbot_stack_pole parent="${parent}" number="1" x_loc= "-0.084" y_loc= "0.127" z_loc="0.006" color="${set_color}"/>
+   <rabbot_stack_pole parent="${parent}" number="2" x_loc="-0.170" y_loc= "0.127" z_loc="0.006" color="${set_color}"/>
+   <rabbot_stack_pole parent="${parent}" number="3" x_loc= "0.084" y_loc="-0.127" z_loc="0.006" color="${set_color}"/>
+   <rabbot_stack_pole parent="${parent}" number="4" x_loc= "-0.084" y_loc="-0.127" z_loc="0.006" color="${set_color}"/>
+   <rabbot_stack_pole parent="${parent}" number="5" x_loc="-0.170" y_loc="-0.127" z_loc="0.006" color="${set_color}"/>
+  </xacro:macro>
+</robot>

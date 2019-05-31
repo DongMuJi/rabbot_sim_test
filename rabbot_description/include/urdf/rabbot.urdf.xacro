@@ -1,0 +1,266 @@
+<?xml version="1.0"?>
+<robot name="RABBOT" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find e100_description)/include/urdf/property.urdf.xacro"/>
+  <xacro:include filename="$(find rabbot_description)/include/urdf/cobotta.urdf.xacro"/>
+  <xacro:include filename="$(find rabbot_description)/include/urdf/ria_e100_base.urdf.xacro"/>
+  <xacro:include filename="$(find rabbot_description)/include/urdf/stack_pole.urdf.xacro"/>
+  <xacro:include filename="$(find rabbot_description)/include/urdf/viper.urdf.xacro"/>
+  <xacro:include filename="$(find rabbot_description)/include/urdf/hokuyo_ust10lx.urdf.xacro"/>
+  <xacro:include filename="$(find rabbot_description)/include/urdf/intel_d435.urdf.xacro"/>
+
+  <link name="RIA_MIDDLE_PLATE">
+     <inertial>
+     <origin xyz="0 -0.0077308 0.0029967" rpy="0 0 0"/>
+     <mass value="2.5563" />
+     <inertia 
+        ixx="0.0490490642202677"
+        ixy="0"
+        ixz="0"
+        iyy="0.0302695055921754"
+        iyz="0"
+        izz="0.0793032413693469"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://rabbot_description/include/meshes/middle_plate_support.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="Dark_Grey"/>
+      <origin rpy="1.5707963267949 0 -${M_PI/2}" xyz="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://rabbot_description/include/meshes/middle_plate_support.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <origin rpy="1.5707963267949 0 -${M_PI/2}" xyz="0 0 0"/>
+    </collision>      
+  </link>
+
+  <gazebo reference="RIA_MIDDLE_PLATE">
+    <material>Gazebo/FlatBlack</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+
+  <link name="RIA_TOP_PLATE">
+    <inertial>
+        <origin xyz="-5.7104E-05 0.24131 0.00300489999999999" rpy="0 0 0" />
+        <mass value="2.7411" />
+        <inertia
+          ixx="0.0523456387436787"
+          ixy="3.23283587923758E-05"
+          ixz="0"
+          iyy="0.030730588580037"
+          iyz="0"
+          izz="0.0830597847386835" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://rabbot_description/include/meshes/top_plate_support.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="Dark_Grey"/>
+      <origin xyz="-0.240 0 0" rpy="${M_PI/2} ${M_PI} -${M_PI/2}" />
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://rabbot_description/include/meshes/top_plate_support.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <origin xyz="-0.240 0 0" rpy="${M_PI/2} ${M_PI} -${M_PI/2}" />
+    </collision>      
+  </link>
+
+  <gazebo reference="RIA_TOP_PLATE">
+    <material>Gazebo/FlatBlack</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+  <link name="COBOTTA_MOUNT_PLATE">
+    <inertial>
+      <origin xyz="0 0.0077934 0.0049968" rpy="0 0 0" />
+      <mass value="1.1373" />
+      <inertia
+        ixx="0.00446187865672617"
+        ixy="0"
+        ixz="0"
+        iyy="0.00346788041432003"
+        iyz="0"
+        izz="0.00791078887863433" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://rabbot_description/include/meshes/cobotta_quick_change_board.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="Dark_Grey"/>
+      <origin xyz="0 0 0" rpy="${M_PI/2} 0 ${M_PI/2}" />
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://rabbot_description/include/meshes/cobotta_quick_change_board.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="${M_PI/2} 0 ${M_PI/2}" />
+    </collision>      
+  </link>
+
+  <gazebo reference="COBOTTA_MOUNT_PLATE">
+    <material>Gazebo/FlatBlack</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+  
+  <link name="VIPER_SWITCH">
+    <inertial>
+      <origin xyz="-1.7682E-06 -4.19509999908222E-09 0.014989" rpy="0 0 0" />
+      <mass value="0.14691" />
+      <inertia
+        ixx="4.79485147711884E-05"
+        ixy="0"
+        ixz="0"
+        iyy="9.92016358617664E-05"
+        iyz="0"
+        izz="0.000125145143008812" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://rabbot_description/include/meshes/viper_switch.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="Dark_Grey"/>
+      <origin xyz="0 0 0" rpy="${M_PI/2} 0 -${M_PI/2}" />
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://rabbot_description/include/meshes/viper_switch.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="${M_PI/2} 0 -${M_PI/2}" />
+    </collision>      
+  </link>
+  
+  <gazebo reference="VIPER_SWITCH">
+    <material>Gazebo/FlatBlack</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+  <link name="HOKUYO_SUPPORT">
+    <inertial>
+      <origin xyz="0.025338 0.0014299 0" rpy="0 0 0" />
+      <mass value="0.044385" />
+      <inertia
+        ixx="1.64297768208234E-05"
+        ixy="3.40221891378544E-06"
+        ixz="0"
+        iyy="4.37199942188748E-05"
+        iyz="0"
+        izz="2.99909040588867E-05" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://rabbot_description/include/meshes/hokuyo_support.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="Dark_Grey"/>
+      <origin xyz="0 0 0" rpy="-${M_PI} 0 0" />
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://rabbot_description/include/meshes/hokuyo_support.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="-${M_PI} 0 0" />
+    </collision>      
+  </link>
+
+  <gazebo reference="HOKUYO_SUPPORT">
+    <material>Gazebo/FlatBlack</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+  <link name="realsense_support">
+    <inertial>
+      <origin xyz="-0.0020264 0 0.001026" rpy="0 0 0" />
+      <mass value="0.0092626" />
+      <inertia
+        ixx="0"
+        ixy="0"
+        ixz="0"
+        iyy="1.18044674803312E-06"
+        iyz="0"
+        izz="1.8228070919273E-06" />
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://rabbot_description/include/meshes/realsense_support.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="Dark_Grey"/>
+      <origin xyz="0 0 0" rpy="${3*M_PI/2} ${M_PI} ${M_PI}" />
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://rabbot_description/include/meshes/realsense_support.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <origin xyz="0 0 0" rpy="${3*M_PI/2} ${M_PI} ${M_PI}" />
+    </collision>      
+  </link>
+
+  <gazebo reference="realsense_support">
+    <material>Gazebo/FlatBlack</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+
+  <joint name="base_link_to_RIA_MIDDLE_PLATE" type="fixed">
+    <parent link="base_link"/>                     <!--parent link="RIA_BASE"/-->
+    <child link="RIA_MIDDLE_PLATE"/>
+    <origin rpy="0 0 0" xyz="-0.1375 0 0.155"/>    <!--origin rpy="0 0 0" xyz="0.0375 0.005 0.155"/-->
+  </joint>
+
+  <joint name="base_link_to_RIA_TOP_PLATE" type="fixed">
+    <parent link="base_link"/>                     <!--parent link="RIA_BASE"/-->
+    <child link="RIA_TOP_PLATE"/>
+    <origin rpy="0 0 0" xyz="-0.1375 0 0.296"/>    <!--origin rpy="0 0 0" xyz="0.0375 0.005 0.296"/-->
+  </joint>   
+
+  <joint name="base_link_to_COBOTTA_MOUNT_PLATE" type="fixed">
+    <parent link="base_link"/>                     <!--parent link="RIA_BASE"/-->
+    <child link="COBOTTA_MOUNT_PLATE"/>          
+    <origin rpy="0 0 0" xyz="-0.092 0 0.302"/>     <!--origin rpy="0 0 0" xyz="0.083 0.0005 0.302"/--> 
+  </joint>
+
+  <joint name="joint_mount" type="fixed">
+     <parent link="COBOTTA_MOUNT_PLATE"/>
+     <child link="cobotta_base_link"/>
+     <origin rpy="0 0 0" xyz="0.025 0 0.006"/> <!--TODO-->
+  </joint>
+  
+  <joint name="base_link_to_VIPER_SWITCH" type="fixed">
+    <parent link="base_link"/>                      <!--parent link="RIA_BASE"/-->
+    <child link="VIPER_SWITCH"/>
+    <origin rpy="0 0 0" xyz="-0.3275 0 0.161"/>     <!--origin rpy="0 0 0" xyz="-0.1525 0.005 0.161"/-->
+  </joint>
+
+  <joint name="base_link_to_HOKUYO_SUPPORT" type="fixed">
+    <parent link="base_link"/>                      <!--parent link="RIA_BASE"/-->
+    <child link="HOKUYO_SUPPORT"/>
+    <origin rpy="0 0 0" xyz="0.041 0 0.128"/>       <!--origin rpy="0 0 0" xyz="0.2125 0.005 0.128"/-->
+  </joint>
+
+  <joint name="arm_to_realsense_support" type="fixed">
+    <parent link="J5"/>
+    <child link="realsense_support"/>
+    <origin rpy="0 -${M_PI/2} 0" xyz="-0.0335 -0.045 0.01"/>
+  </joint>
+
+  <rabbot_pole parent="RIA_MIDDLE_PLATE" set_color="Dark_Grey"/>
+
+  <viper frame="viper" name="viper" />
+
+  <xacro:sensor_hokuyo_ust10lx prefix="hokuyo_laser" parent="HOKUYO_SUPPORT">
+     <origin xyz="0 0 0.051" rpy="0 0 0"/>
+  </xacro:sensor_hokuyo_ust10lx>
+ 
+  <xacro:sensor_r430 prefix="realsense" parent="realsense_support">
+     <origin xyz="0.017 0 0.016" rpy="0 0 0"/>
+  </xacro:sensor_r430> 
+
+  <joint name="base_link_to_viper" type="fixed">
+    <parent link="base_link"/>                      <!--parent link="RIA_BASE"/-->
+    <child link="viper"/>
+    <origin rpy="0 0 0" xyz="0.050 0 0.250"/>       <!--0.225 0.005 0.250-->
+  </joint>    
+
+</robot>

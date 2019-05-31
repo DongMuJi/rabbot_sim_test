@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<launch>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <!--arg name="world_name" value="$(find rabbot_sim)/worlds/office.world"/-->
+    <arg name="use_sim_time" value="true"/>
+    <arg name="debug" value="false"/>
+    <arg name="paused" value="false"/>
+    <arg name="gui" value="true"/>
+  </include>
+
+  <param name="robot_description" command="$(find xacro)xacro '$(find rabbot_description)/include/urdf/rabbot.urdf.xacro' "/>
+
+  <node pkg="tf" type="static_transform_publisher" name="base_fodotpbase_link_tf" args="0.135 0 0.062 0 0 0 base_footprint base_link_to_laser 50"/>
+
+  <rosparam file="$(find rabbot_sim)/include/denso_cobotta_control.yaml" command="load" />
+  
+
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model rabbot -param robot_description"/>
+
+ 
+  <node name="robot_state_publisher" pkg="robot_state_publisher" 
+        type="robot_state_publisher" respawn="false" output="screen">
+ 
+  </node>
+
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen" args="joint_state_controller arm_controller gripper_controller" />
+
+  <!--nclude file="$(find rabbot_gazebo_moveit_config)/launch/move_group.launch"/-->
+
+
+   
+
+
+
+
+</launch>
