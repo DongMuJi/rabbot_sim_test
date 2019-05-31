@@ -1,0 +1,28 @@
+<launch>
+
+  <arg name="limited" default="false" doc="If true, limits joint range [-PI, PI] on all joints." />
+  <arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface" />
+
+   <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <!--arg name="world_name" value="$(find rabbot_sim)/worlds/office.world"/-->
+    <arg name="use_sim_time" value="true"/>
+    <arg name="debug" value="false"/>
+    <arg name="paused" value="false"/>
+    <arg name="gui" value="true"/>
+  </include>
+
+
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find cobotta_ur3_gazebo)/include/urdf/e100_ur3.urdf.xacro'" />
+
+  <include file="$(find cobotta_ur3_gazebo)/launch/controller_utils.launch"/>
+
+
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -param robot_description -model RABBOT" />
+
+
+  <rosparam file="$(find cobotta_ur3_gazebo)/controller/rabbot_ur3_controller.yaml" command="load"/>
+  <node name="arm_controller_spawner" pkg="controller_manager" type="spawner"  args="arm_controller joint_state_controller mobile_base_controller" respawn="false" output="screen"/>
+
+
+
+</launch>

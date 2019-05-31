@@ -1,0 +1,68 @@
+arm_controller:
+  type: position_controllers/JointTrajectoryController
+  joints:
+     - ur3_shoulder_pan_joint
+     - ur3_shoulder_lift_joint
+     - ur3_elbow_joint
+     - ur3_wrist_1_joint
+     - ur3_wrist_2_joint
+     - ur3_wrist_3_joint
+  constraints:
+      goal_time: 0.6
+      stopped_velocity_tolerance: 0.05
+      ur3_shoulder_pan_joint: {trajectory: 0.1, goal: 0.1}
+      ur3_shoulder_lift_joint: {trajectory: 0.1, goal: 0.1}
+      ur3_elbow_joint: {trajectory: 0.1, goal: 0.1}
+      ur3_wrist_1_joint: {trajectory: 0.1, goal: 0.1}
+      ur3_wrist_2_joint: {trajectory: 0.1, goal: 0.1}
+      ur3_wrist_3_joint: {trajectory: 0.1, goal: 0.1}
+  stop_trajectory_duration: 0.5
+  state_publish_rate:  25
+  action_monitor_rate: 10
+
+joint_state_controller:
+  type: joint_state_controller/JointStateController
+  publish_rate: 50  
+
+
+mobile_base_controller:
+  type        : "diff_drive_controller/DiffDriveController"
+  left_wheel  : 'base_link_to_wheel_fl'
+  right_wheel : 'base_link_to_wheel_fr'
+  publish_rate: 50.0               # default: 50
+  pose_covariance_diagonal : [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 1000.0]
+  twist_covariance_diagonal: [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 1000.0]
+
+    # Wheel separation and diameter. These are both optional.
+    # diff_drive_controller will attempt to read either one or both from the
+    # URDF if not specified as a parameter
+  wheel_separation : 0.385
+  wheel_radius : 0.01
+    
+    # Wheel separation and radius multipliers
+  wheel_separation_multiplier: 1.0 # default: 1.0
+  wheel_radius_multiplier    : 1.0 # default: 1.0
+
+    # Velocity commands timeout [s], default 0.5
+  cmd_vel_timeout: 0.25
+
+    # Base frame_id
+  base_frame_id: base_link
+
+    # Velocity and acceleration limits
+    # Whenever a min_* is unspecified, default to -max_*
+  linear:
+    x:
+      has_velocity_limits    : true
+      max_velocity           : 1.75  # m/s
+      min_velocity           : -1.75 # m/s
+      has_acceleration_limits: true
+      max_acceleration       : 1.75  # m/s^2
+      min_acceleration       : -1.75 # m/s^2
+  angular:
+    z:
+      has_velocity_limits    : true
+      max_velocity           : 3.0  # rad/s
+      has_acceleration_limits: true
+      max_acceleration       : 3.0  # rad/s^2
+

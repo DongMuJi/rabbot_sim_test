@@ -1,0 +1,178 @@
+<?xml version="1.0"?>
+<robot name="ria_e100_base" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find e100_description)/include/urdf/wheels.urdf.xacro"/>
+  <xacro:include filename="$(find e100_description)/include/urdf/materials.urdf.xacro"/>
+  <xacro:include filename="$(find e100_description)/include/urdf/property.urdf.xacro"/>
+
+  <xacro:macro name="ria_e100_base" params="base_hw_interface:=hardware_interface/VelocityJointInterface">
+
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.03 0.03 0.03"/>
+      </geometry>
+      <material name="Black"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.03 0.03 0.03"/>
+      </geometry>
+      <material name="Black"/>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+    </collision>   
+  </link>
+
+  <link name="RIA_BASE" >
+    <inertial>
+      <mass value="40"/><!--14-->
+      <origin rpy=" 0 0 0" xyz="0 0 0"/>
+      <inertia  ixx="2.42811" ixy="0.00503" ixz="0.09703" iyy="2.52291" iyz="0.10757" izz="0.18274"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="package://e100_description/include/meshes/base.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="Black"/>
+      <origin rpy="${M_PI/2} 0 -${M_PI/2}" xyz="0.507 0.182 0"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://e100_description/include/meshes/base.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <origin rpy="${M_PI/2} 0 -${M_PI/2}" xyz="0.507 0.182 0"/>
+    </collision>      
+  </link>
+
+  <gazebo reference="RIA_BASE">
+    <material>Gazebo/Black</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+
+  <joint name="base_link_to_RIA_BASE" type="fixed">
+    <parent link="base_link"/>
+    <child link="RIA_BASE"/>
+    <origin rpy="0 0 0" xyz="-0.175 -0.005 0"/>
+  </joint>
+
+  <joint name="base_link_to_wheel_fr" type="continuous">
+    <parent link="base_link"/>
+    <child link="WHEEL_FR"/>
+    <origin rpy="0 0 0" xyz="0 -0.227 0.025"/>
+    <axis xyz="0 1 0" rpy="0 0 0" />
+    <limit effort="200" velocity="200"/>
+    <joint_properties damping="0" friction="0"/>
+  </joint>
+
+  <transmission name="baselink_wheel_fr_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base_link_to_wheel_fr">
+      <hardwareInterface>${base_hw_interface}</hardwareInterface>
+    </joint>
+    <actuator name="joint_wheel_fr_motor">
+      <!--hardwareInterface>EffortJointInterface</hardwareInterface-->
+      <hardwareInterface>${base_hw_interface}</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <joint name="base_link_to_wheel_fl" type="continuous">
+    <parent link="base_link"/>
+    <child link="WHEEL_FL"/>
+    <origin rpy="0 0 0" xyz="0 0.227 0.025"/>
+    <axis xyz="0 1 0" rpy="0 0 0" />
+    <limit effort="200" velocity="200"/>
+    <joint_properties damping="0" friction="0"/>
+  </joint>
+
+  <transmission name="baselink_wheel_fl_trans">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base_link_to_wheel_fl">
+      <hardwareInterface>${base_hw_interface}</hardwareInterface>
+    </joint>
+    <actuator name="joint_wheel_fl_motor">
+      <!--hardwareInterface>EffortJointInterface</hardwareInterface-->
+      <hardwareInterface>${base_hw_interface}</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+
+  <joint name="base_link_to_wheel_bl" type="fixed">
+    <parent link="base_link"/>
+    <child link="WHEEL_BL"/>
+    <origin rpy="0 0 0" xyz="-0.3734 0.12 -0.072"/>
+  </joint>
+
+  <joint name="base_link_to_wheel_br" type="fixed">
+    <parent link="base_link"/>
+    <child link="WHEEL_BR"/>
+    <origin rpy="0 0 0" xyz="-0.3734 -0.11 -0.072"/>
+  </joint>
+
+  <gazebo reference="WHEEL_FL">
+    <mu1 value="0.2"/>
+    <mu2 value="0.2"/>
+    <fdir1 value="1 0 0"/>
+    <kp value="10000000.0"/>
+    <kd>1.0</kd>
+    <maxVel>0.5</maxVel>
+    <material>Gazebo/Grey</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+  <gazebo reference="WHEEL_FR">
+    <mu1 value="0.2"/>
+    <mu2 value="0.2"/>
+    <fdir1 value="1 0 0"/>
+    <kp value="10000000.0"/>
+    <kd>1.0</kd>
+    <maxVel>0.5</maxVel>
+    <material>Gazebo/Grey</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+  <gazebo reference="WHEEL_BL">
+    <mu1 value="0.0"/>
+    <mu2 value="0.0"/>
+    <fdir1 value="1 0 0"/>
+    <kp value="10000000.0"/>
+    <kd>1.0</kd>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+
+  <gazebo reference="WHEEL_BR">
+    <mu1 value="0.0"/>
+    <mu2 value="0.0"/>
+    <fdir1 value="1 0 0"/>
+    <kp value="10000000.0"/>
+    <kd>1.0</kd>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+  <!--
+  <gazebo>
+    <plugin name="gazebo_controller" filename="libgazebo_ros_diff_drive.so">
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <odometrySource>world</odometrySource>
+      <publishOdomTF>true</publishOdomTF>
+      <robotBaseFrame>base_link</robotBaseFrame>
+      <publishWheelTF>false</publishWheelTF>
+      <publishTf>true</publishTf>
+      <publishWheelJointState>true</publishWheelJointState>
+      <legacyMode>false</legacyMode>
+      <updateRate>30</updateRate>
+      <leftJoint>base_link_to_wheel_fl</leftJoint>
+      <rightJoint>base_link_to_wheel_fr</rightJoint>
+      <wheelSeparation>0.385</wheelSeparation>
+      <wheelDiameter>0.2</wheelDiameter>
+      <wheelAcceleration>20</wheelAcceleration>
+      <wheelTorque>20</wheelTorque>
+      <rosDebugLevel>na</rosDebugLevel>
+    </plugin>
+  </gazebo>
+  -->
+  </xacro:macro>
+</robot>

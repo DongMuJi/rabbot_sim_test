@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package>
+  <name>cobotta_ur3_gazebo</name>
+  <version>3.0.2</version>
+  <description>The denso robot gazebo package includes a launch file for simulating DENSO robot.</description>
+  <maintainer email="denso_robot_soft@denso-wave.co.jp">DENSO WAVE INCORPORATED</maintainer>
+  <license>MIT</license>
+  <author email="denso_robot_soft@denso-wave.co.jp">DENSO WAVE INCORPORATED</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <run_depend>gazebo_ros_control</run_depend>
+  <run_depend>gazebo_ros</run_depend>
+  <run_depend>joint_state_controller</run_depend>
+  <run_depend>joint_trajectory_controller</run_depend>
+  <run_depend>gripper_action_controller</run_depend>
+  <run_depend>effort_controllers</run_depend>
+  <run_depend>robot_state_publisher</run_depend>
+  <run_depend>rostopic</run_depend>
+  <run_depend>controller_manager</run_depend>
+  
+</package>

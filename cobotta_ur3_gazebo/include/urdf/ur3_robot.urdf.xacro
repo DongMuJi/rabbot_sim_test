@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"
+       name="ur3" >
+
+  <xacro:arg name="transmission_hw_interface" default="hardware_interface/PositionJointInterface"/>
+
+  <!-- common stuff -->
+  <xacro:include filename="$(find cobotta_ur3_gazebo)/include/urdf/common.gazebo.xacro" />
+
+  <!-- ur3 -->
+  <xacro:include filename="$(find cobotta_ur3_gazebo)/include/urdf/ur3.urdf.xacro" />
+
+  <!-- arm -->
+  <xacro:ur3_robot prefix="ur3_" joint_limited="false"
+    transmission_hw_interface="$(arg transmission_hw_interface)"/>
+
+
+
+</robot>
